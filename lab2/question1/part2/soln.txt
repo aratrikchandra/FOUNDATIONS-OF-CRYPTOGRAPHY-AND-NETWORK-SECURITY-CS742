@@ -1,0 +1,16 @@
+
+1. First, you need to extract the public key from each private key. You can do this with the `openssl rsa -pubout` command. For example, to extract the public key from `private1.pem`, you would use:
+
+
+openssl rsa -in /home/labDirectory/part2/keys/private1.pem -pubout -out public1.pem
+
+Do this for each private key.
+
+2. Next, you can use the `openssl dgst -verify` command to check if a given public key was used to sign the `secret.txt` file. For example, to check `public1.pem`, you would use:
+
+
+openssl dgst -sha256 -verify public1.pem -signature /home/labDirectory/part2/secret.sign /home/labDirectory/part2/secret.txt
+
+This command will output either "Verified OK" if the signature is valid, or "Verification Failure" if it's not.
+
+3. Repeat step 2 for each public key. The one that outputs "Verified OK" is the one that was used to sign the `secret.txt` file.

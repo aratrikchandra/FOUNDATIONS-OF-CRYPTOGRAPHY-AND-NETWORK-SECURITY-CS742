@@ -1,0 +1,33 @@
+1. MD5 hash of the file:
+
+openssl dgst -md5 /home/labDirectory/part1/secret.txt
+
+
+2. SHA256 hash of the file:
+
+openssl dgst -sha256 /home/labDirectory/part1/secret.txt
+
+
+3. SHA256 MAC of the file:
+
+openssl dgst -sha256 -hmac "sup3r_s3cret_k3y" part1/secret.txt
+
+
+4. SHA512 MAC of the file:
+
+openssl dgst -sha512 -hmac "sup3r_s3cret_k3y" part1/secret.txt
+
+
+5. Generate a private key:
+
+openssl genpkey -algorithm RSA -out part1/private.pem
+
+
+6. Sign the `secret.txt` file with the private key:
+
+openssl dgst -sha256 -sign private.pem -out data.sig secret.txt
+
+
+7. Create md5sum of the signature:
+
+md5sum data.sig
