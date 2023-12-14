@@ -1,0 +1,54 @@
+        Preamble:
+Agent X's boss Albert is impressed with the way Agent X is managing security concerns of his
+organization (well, one sows, another reaps, that's life!). The boss wants yet another problem
+tackled. Periodically he has some information that he needs to share with thousands of field agents. He could potentially send individual messages encrypted with their public key and signed by his private key but this is turning out to be very cumbersome. What can be done?
+
+In Part-1 of the lab:
+     You decide that you can create a secure website and post this information there. You know TLS/SSL is the way to go since it helps agents mutually authenticate the server.
+
+In Part-2 of the lab:
+     You decide that you can create a secure website and post this information there and these field agents can login with passwords everyday and check for new updates and retrieve the information. You know TLS/SSL is the way to go since it helps agents mutually authenticate the server.
+
+Part-1 of the activity involves:
+       - Setting up HTTPS server using apache2
+Part-2 of the activity involves:
+       - Analyzing the HTTPS traffic using wireshark
+       - Decrypting HTTPS traffic with the SSL server’s SSL key logs with the help of wireshark.
+
+Part-1: Convert a HTTP Server to HTTPS server
+
+How to do this, guidance below. But once you set up the server, access the flag on the server and submit it in flag.txt file
+
+Guidance:
+- To host a https server, the server needs a certificate (we saw how to get one already in another activity). “ca-cert.pem”, "webserver-cert.pem" and "webserver-key.pem" are the relevant files here. We have created these files for you in following locations:
+           - ca-cert.pem : “/home/labDirectory/part1/boss/ca-cert.pem”
+           - webserver-cert.pem: “/home/labDirectory/part1/webserver/webserver-cert.pem”
+           - webserver-key.pem: “/home/labDirectory/part1/webserver/webserver-key.pem”
+- Edit the "/etc/apache2/sites-available/ssl-serv.conf" file where in “SSLCACertificateFile” variable put path of the CA certificate, in "SSLCertificateFile" variable put the path of the server certificate and in "SSLCertificateKeyFile" variable put the path of the server key. Save the ssl-serv.conf file and exit from it. (Use nano/vim editors for this purpose)
+- Now run the following commands: A). a2ensite ssl-serv B) service apache2 start or service apache2 restart (if apache is already running)
+           - a2ensite  is  a  script  that  enables  the specified site within the apache2  configuration
+           - “service apache2 start”, starts the server
+- Now access the webserver on https://localhost:443/ and the flag1 will be found at https://localhost:443/flag1.txt. This is a publicly available information which anyone without any issues can access.
+This is the private flag only accessible with valid client certificate signed by CA.
+**SUBMISSION DETAILS:** Submit the flag in “/home/labDirectory/part1/flag.txt”
+
+**EXTRA**: Apache also allows you to have authentication using client certificate which is signed by the same CA. Feel free to explore this feature on your own. A good resource for this can be found at https://stuff-things.net/2015/09/28/configuring-apache-for-ssl-client-certificate-authentication/
+
+Part-2: Wireshark to decrypt and explore HTTPS traffic
+
+While you can and in fact should collect your own wireshark trace while the above curl is happening and examine your own https connection, we have instead given you an already collected trace. This captures the interaction between a browser and a https server, wherein some username/password was exchanged. 
+
+Notice that when you open the trace in wireshark, everything is encrypted and you cannot determine the username and password.  Nonetheless, examine the trace carefully and identify below specified detail and enter in the “/home/labDirectory/part2/flag.txt” file.
+
+If you have somehow managed to get the pre-master key, you can actually decrypt the traffic and analyse it further. For this, we have provided the pre-master key logs for that traffic in "/home/labDirectory/part2/" folder. Your task is to use the pre-master key and decrypt the HTTPS traffic capture using Wireshark. Once you have done it successfully, obtain the username and password embedded in the trace, login with the same username and password at “https://localhost:4443/” and submit the password you found and the flag in the “/home/labDirectory/part2/flag.txt” file.
+
+**NOTE**: After pressing the Attempt button, wait for some time (max 1 minute) for the container to get set up.
+**WireShark Installation:** Since we are working with wireshark, install it from https://www.wireshark.org/download.html.
+**Decrypting SSL/TLS traffic with wireshark:** Here is a good reference on how to do it: https://www.comparitech.com/net-admin/decrypt-ssl-with-wireshark/. If you don't see SSL option in protocols submenu as shown in above material, find TLS instead. Both works the same way here.
+
+--------------------------------------- Submission Details ----------------------------------------------
+Submit the following in the flag.txt
+- password found 
+- Flag found after logging in
+
+      

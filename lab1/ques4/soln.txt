@@ -1,0 +1,26 @@
+
+part 1
+
+root@aratrik:/home/labDirectory# cd part1
+root@aratrik:/home/labDirectory/part1# ls
+encrypted.txt  flags.txt  private.key  secret.txt
+root@aratrik:/home/labDirectory/part1# openssl rsa -in private.key -pubout -out public.key
+writing RSA key
+root@aratrik:/home/labDirectory/part1# ls
+encrypted.txt  flags.txt  private.key  public.key  secret.txt
+root@aratrik:/home/labDirectory/part1# openssl pkeyutl -encrypt -in secret.txt -out encrypted.txt -pubin -inkey public.key
+root@aratrik:/home/labDirectory/part1# ls
+encrypted.txt  flags.txt  private.key  public.key  secret.txt
+root@aratrik:/home/labDirectory/part1# md5sum encrypted.txt > flags.txt
+root@aratrik:/home/labDirectory/part1# md5sum encrypted.txt > flags.txt
+
+
+
+
+part2
+
+root@aratrik:/home/labDirectory# cd part2
+root@aratrik:/home/labDirectory/part2# ls
+encrypted.txt  flags.txt  keys
+root@aratrik:/home/labDirectory/part2# openssl pkeyutl -decrypt -in encrypted.txt -out flags.txt -inkey keys/key1.pem
+

@@ -1,0 +1,6 @@
+echo "Verified" |openssl pkeyutl -encrypt -pubin -inkey public.key | openssl pkeyutl -decrypt -inkey privateKeys/private1.key
+Verified
+
+Run this command for privateKeys/private1.key to privateKeys/private10.key
+and check which one of them matches with the public key.Then run rsa-utility.py to find p,q(primes),d(decryption key)
+

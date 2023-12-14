@@ -1,0 +1,33 @@
+        Preamble: Preamble:
+One fine day, a gentleman whom you have not seen before walks into your room. The gentleman asks if you know Agent X. You are now beginning to panic, maybe this guy is an enemy agent out to get you. As the man advances towards you, you start to back off. And bang! this is what happens next https://i.dailymail.co.uk/i/gif/2017/11/giphy.gif
+
+Oh man! You can't believe your eyes. The mask Tom Cruise sports in “Mission Impossible” is
+indeed real! 
+
+Getting to the point, Agent X tells that he is going undercover for a few weeks in Gabbar's
+organization. Some insider within the organization has given him some juicy information which he wants to act on. He managed to get a job as a data entry operator. He may not be able to login to high security machines, but he sure will be given access to a machine that is plugged into the LAN.
+
+Information agent X has is as follows: A machine (let us call it A) will periodically contact a central server (call it B) which maintains a list of whitelisted IPs. The job of A is to get this info and configure another  machine (say C) to ensure C responds only to machines that are part of the whitelist. When it responds, it shares a key which they can use to access sensitive information. The IP whitelist and key can keep changing, hence the above mechanism.
+
+He needs your help to understand what he needs to do in the enemy organization to be able to talk with C and get the key from it.
+
+
+Exercise:
+
+Your first job is to sniff traffic going on the LAN, identify machines A and B, and recover the password to be able to login to B to get the whitelisted IPs.
+
+- Create a python3 script using scapy library to sniff the data.
+- Get the password, login to the server and capture the flag
+- Also note down the whitelisted IPs and the protocols they need to use, this will be needed for the next exercise.
+
+----------------------- Submission Details --------------------------------------------
+Submit the flag and password in /home/labdirectory/flag.txt.
+  	
+Guidance:
+- https://scapy.readthedocs.io/en/latest/usage.html
+- In a real world, we would have used multiple machines interacting with each other, but in this lab since we do not yet have multi container support, everything is via localhost interface.
+- We have given a sample scapy script sniff.py available at /home/labDirectory/sniff.py. This script sniffs ICMP packets. Run the script and sniff the localhost; at the same time ping the localhost also. See if your script captures the ICMP packets of ping.
+        - To work with sniffing scripts you also need to find out the interface name you want to sniff packets from. Here since we will be sniffing only localhost connections, the interface will be loopback.
+         - Run `ifconfig` command to see all the interfaces, and put the name of the interface at the suitable place in your sniffer script.
+- Extend the script to achieve the intended task.
+      

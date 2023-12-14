@@ -1,0 +1,20 @@
+Solution::
+
+To decrypt and analyze HTTPS traffic using Wireshark, you can follow these steps:
+
+1. Open Wireshark and go to `Edit > Preferences`.
+2. In the Preferences window, expand the `Protocols` list and scroll down to `TLS`.
+3. In the `TLS` protocol preferences, find the `Pre-Master-Secret log filename` field. This is where you need to provide the path to the pre-master key log file.
+4. Click `Browse` and navigate to the location of your pre-master key log file (`/home/labDirectory/part2/`), select the file and click `Open`.
+5. Click `OK` to close the Preferences window.
+6. Now, open the provided packet capture file in Wireshark. You should be able to see the decrypted HTTPS traffic.
+
+Please note that the decrypted traffic will only be visible for packets where the pre-master key was logged. If the key log file doesn't contain keys for all sessions in the capture, some sessions will still be displayed as encrypted.
+
+Once you have decrypted the HTTPS traffic, you can analyze it to find the username and password. Look for HTTP POST requests, as these often contain login information. In the packet details pane, expand the `Hypertext Transfer Protocol` section and look for a line that starts with `Form item: "username" =` and `Form item: "password" =`. The values following these lines are the username and password, respectively.
+
+After obtaining the username and password, you can use them to log in at `https://localhost:4443/`. The flag should be displayed upon successful login.
+
+Finally, write the password and the flag into the `/home/labDirectory/part2/flag.txt` file for submission. 
+
+https://localhost:4443/home.php?uname=admin&password=7UwFYDOWv8AOS4p2HpY_w5wT5rPsRlJi

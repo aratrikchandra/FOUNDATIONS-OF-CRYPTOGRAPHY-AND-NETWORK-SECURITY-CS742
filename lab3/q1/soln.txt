@@ -1,0 +1,28 @@
+first get uname and  password from sniffed frames
+
+
+###[ TCP ]### 
+        sport     = 53338
+        dport     = http
+        seq       = 3186935147
+        ack       = 4148493348
+        dataofs   = 8
+        reserved  = 0
+        flags     = PA
+        window    = 512
+        chksum    = 0xfeaf
+        urgptr    = 0
+        options   = [('NOP', None), ('NOP', None), ('Timestamp', (3058581401, 3058581400))]
+###[ Raw ]### 
+           load      = 'GET /home.php?uname=admin&password=4UZmOzejjJjCBjtuozsQtH8BEjwqWiFo HTTP/1.1\r\nHost: localhost\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n'
+
+then stop apache2 server in terminal and start in vlab
+
+then log into server by uname and password and get whitelisted ip and flag
+
+
+Service Status
+Whitelisted IPs	Protocol	Status
+192.168.10.0/24	TCP	Active
+192.168.14.12	UDP	Active
+Collect your flag: FLAG{J0YFc0lpNHcITP6_m2rxE9NmmELOE9PG}

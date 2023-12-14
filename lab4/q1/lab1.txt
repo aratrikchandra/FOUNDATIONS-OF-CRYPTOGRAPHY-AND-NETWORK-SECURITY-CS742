@@ -1,0 +1,26 @@
+Question:
+Preamble:
+Did I tell Agent X has a kid of college going age? Her father is her role model, and unlike her father who had no major training in security, she is an aspiring hacker (ethical or not, yet to be seen), wanting to learn all kinds of security topics.
+
+She is currently enrolled as a student in a course CS-224 in an online ed-tech platform. The site is hosted on http://localhost:80/ Her friend "Rajesh" however is waitlisted in this course. She wants to see if she can find a way to login as "admin" user and convert Rajesh's waitlisted status to enrolled.
+
+Submission Details:
+- Once you convert Rajesh's waitlisted status, you will get a flag, submit it in "/home/labDirectory/flag.txt". It will serve as proof of concept of your work.
+
+Guidance:
+You need to find  a way to login as "admin" user and convert Rajesh's waitlisted status.
+To make things a bit easier for you, here is some additional info (which in the real world you wouldn’t normally have). The query used to run on backend application by PHP is:  "SELECT * FROM `users` WHERE `username` = '$username' AND `password` = '$password'"
+
+Submission Details:
+- Once you convert Rajesh's waitlisted status, you will get flag, submit it in "/home/labDirectory/flag.txt". It will serve as proof of concept of your work.
+
+Solution:
+
+First stop your apache2 server and then from vlab stop/start apache2 server
+Go to local host and their will find a login form with username and password
+
+You can manipulate the SQL query to always return true by injecting a payload like ' OR '1'='1. This would make the query "SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '' OR '1'='1'". Since '1'='1' is always true, this would log you in as the first user in the database, which is often the admin user.
+
+Access the Admin Account: If the first user is not the admin, you might need to use a UNION-based SQL Injection to log in as the admin. This involves using the UNION SQL operator to combine the results of the original query with results from a new query that returns the admin credentials.
+
+Change Rajesh’s Status: Once you’re logged in as the admin, you can change Rajesh’s status from waitlisted to enrolled.

@@ -1,0 +1,45 @@
+Step1: Make Albert a CA
+1. A Certificate Authority (CA, root) is a trusted entity that issues digital certificates. Albert will become the root CA and will generate a root CA’s certificate, which is self-signed.
+2 .A directory called “boss” is already created and available for you for this purpose in “/home/labDirectory/”. It has a configuration file along with various sub-folders needed by the configuration file. Browse around.
+3. Create the private key of Albert using the “openssl genrsa” command you used in earlier activities. The name of the file must be "ca-key.pem".
+4. Enter the directory and run the following command to generate the self-signed certificate for the CA: “openssl req -new -x509 -key ca-key.pem -out ca-cert.pem -config openssl.cnf”
+          - Enter required information. The information should be as followed:
+                 - Country Name: IN
+                 - State or Province Name: Maharashtra
+                 - Locality Name: Mumbai
+                 - Organization Name: iitb-cia
+                 - Organizational Unit Name: cse
+                 - Common Name: www.iitb-cia.com
+                 - email address: it can be anything
+5. File ca-key.pem contains the CA’s keys
+6. File ca-cert.pem is the certificate which contains its public key
+7. You can explore the key via “openssl x509 -in ca-key.pem -text” and the certificates via “openssl x509 -in ca-cert.pem -text”
+
+Step2: Generate Agent public/private key and ask Albert to sign
+1. A directory called agent is available for you for this purpose in “/home/labDirectory/”. Enter the directory.
+2. Within it, create keys via “openssl genrsa” (covered before). The name of the key must be "agent-key.pem"
+3. To generate a Certificate Signing Request (CSR) which includes the agent’s public key and identity information, use “openssl req -new -key agent-key.pem -out agent-csr.pem -config openssl.cnf”
+          - Enter required information. The information should be as followed:
+                 - Country Name: IN
+                 - State or Province Name: Maharashtra
+                 - Locality Name: Mumbai
+                 - Organization Name: iitb-cia
+                 - Organizational Unit Name: cse
+                 - Common Name: www.iitb-cia.com
+                 - email address: it can be anything
+                 - DO NOT ADD any challenge password and other company name if asked.
+4. Note openssl.conf (same file as in step1) is already present in the folder.
+      Above command is quite similar to the one we used in creating self-signed certificate for the CA. The main difference is the-x509 option. Without it, the command generates a request; with it, the command generates a self-signed certificate.
+- Explore the csr via “openssl req -in agent-csr.pem -text”
+- This agent-csr.pem is sent to the CA, who after necessary background checks will issue a certificate. We will mimic this action by copying agent's CSR to the boss's directory. Do that.
+
+
+Step 3: Albert sign's agent's key
+- Albert can turn the CSR into an X509 certificate (agent-cert.pem), using “openssl ca -in
+agent-csr.pem -out agent-cert.pem -cert ca-cert.pem -keyfile ca-key.pem -config openssl.cnf” (Adjust file paths accordingly).
+
+Step 4: Agent examines received certificate
+- Copy agent-cert.pem from Boss's folder to agent's (Agent got his certificate at last)
+- Examine the certificate via “openssl x509 -in agent-cert.pem -text”
+- Verify that the certificate works. For this copy ca.crt from boss’s folder to the agent’s folder (all agents need root CA's certificate anyways) and then type  “openssl verify -CAfile ca-cert.pem agent-cert.pem” 
+- Can you alter the certificate?  Change Subject name to some other name via hex editor and verify.

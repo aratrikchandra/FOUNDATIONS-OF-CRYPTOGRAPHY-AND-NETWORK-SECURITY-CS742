@@ -1,0 +1,38 @@
+        Preamble:  Well we never got to know the name of Agent X’s daughter, she goes by the name (fire) “Cracker” in the hacker community  :-). Now you ask what is on her plate?
+
+The sysads of the ed-tech are not too dumb, they noticed unauthorized changes in their database, post investigation, they figured out the issues of authentication bypass and surprisingly quickly fixed it. Further they rolled back the database to a previous backup, and thus Rajesh is again in the waitlisted status!
+
+Rajesh needs help again to move out of the waitlist. Rajesh has shared his username and password for this hacking and his credentials are "Rajesh:SecretPwd!" (special characters included.  (Well TBH Cracker could use her own account, but she is smart and  doesn’t want her account banned from further hacking or taken to task in case something leaks!)
+
+Cracker found out that there is a search page in course details page which is vulnerable to SQL Injection attack. The task is to use UNION based SQL injection techniques to get hold of "users" table and exfiltrate "admin" user's credentials. Then  login as admin and change the waitlist status of Rajesh, specifically for CS-224 course.
+
+
+Guidance:
+You need to find  a way to login as "admin" user and convert Rajesh's waitlisted status.
+To make things a bit easier for you, here is some additional info (which in the real world you wouldn’t normally have). 
+The query used to run on backend application by PHP is: "SELECT sno,username,waitlisted,courseid FROM userdetails WHERE courseid = '$courseid' AND username = '$searchQuery' AND waitlisted = 0 "
+The users table has following create table query when the table is created:
+
+   	 "CREATE TABLE `users` (
+   	   `sno` int(11) NOT NULL,
+   	   `username` varchar(255) NOT NULL,
+   	   `password` varchar(255) NOT NULL
+   	 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;"
+Steps to exfiltrate data using UNION based SQL injection technique
+Step-1: Identify the number of columns fetched by the backend application.
+Step-2: Identify the data type of the columns fetched
+Step-3: Identify columns which are fetched and visible on your application. Ideally identify the columns in which your custom data is going to be visible to you when the application renders the html code.
+Step-4: Identify table name, and column details for which we want to exfiltrate data from.
+Exfiltrate the data (Either in a single column via concat function, or multiple columns).
+References:
+https://portswigger.net/web-security/sql-injection/lab-retrieve-hidden-data
+https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns
+https://portswigger.net/web-security/sql-injection/union-attacks/lab-find-column-containing-text
+https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-data-from-other-tables
+https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-multiple-values-in-single-column
+
+
+
+Submission Details:
+- Once you convert Rajesh's waitlisted status, you will get flag, submit it in "/home/labDirectory/flag.txt". It will serve as proof of concept of your work.
+      

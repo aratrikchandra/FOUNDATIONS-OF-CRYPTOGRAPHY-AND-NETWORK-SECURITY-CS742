@@ -1,0 +1,8 @@
+First stop your apache2 server and then from vlab stop/start apache2 server
+Go to local host and their will find a login form with username and password
+
+You can manipulate the SQL query to always return true by injecting a payload like ' OR '1'='1. This would make the query "SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '' OR '1'='1'". Since '1'='1' is always true, this would log you in as the first user in the database, which is often the admin user.
+
+or we can use like username as = ' OR 1=1 -- and password= empty
+
+Change Rajesh’s Status: Once you’re logged in as the admin, you can change Rajesh’s status from waitlisted to enrolled.

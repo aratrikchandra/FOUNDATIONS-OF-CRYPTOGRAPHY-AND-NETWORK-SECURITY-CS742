@@ -1,0 +1,71 @@
+The public key `(e, n)` and the secret ciphertext have been provided by the application. Now, we can proceed with the following steps:
+
+1. Choose a random plaintext `m`. In this case, let's choose `m = 2`.
+
+2. Encrypt `m` using the public key to get a new ciphertext. You can use the `encryptor.py` script for this. Replace `e` and `n` with the actual values you received from the application:
+   
+   python3 /home/labDirectory/utils/encryptor.py "2"
+   
+   This will give you a new ciphertext.
+
+3. Forge a new ciphertext that includes the secret ciphertext. You can do this using the formula `(m^e * secret_ciphertext) mod n`. Replace `m`, `e`, `secret_ciphertext`, and `n` with the actual values:
+   
+   echo $(( (2**e * secret_ciphertext) % n ))
+   
+   This will give you the forged ciphertext.
+
+4. Send the forged ciphertext to the application using netcat:
+   
+   echo "forged_ciphertext" | nc -nv 127.0.0.1 9001
+
+   The application will then decrypt the forged ciphertext and send you the result.
+
+5. The result you receive from the application will be the decrypted forged ciphertext, which is `(m * secret_plaintext) mod n`. Since we know `m` and `n`, we can calculate the secret plaintext by dividing the decrypted forged ciphertext by `m`:
+   
+   echo $(( decrypted_forged_ciphertext / m ))
+   
+   This will give you the secret plaintext in long integer format.
+
+6. Convert the secret plaintext from long integer format to ASCII using the `long-to-ascii-converter.py` script:
+   
+   python3 /home/labDirectory/utils/long-to-ascii-converter.py "secret_plaintext"
+   
+    This will give you the secret plaintext in ASCII, which is the flag.
+
+7. Finally, submit the flag by writing it to the `flags.txt` file in your lab directory:
+   
+   echo "flag" > /home/labDirectory/flags.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

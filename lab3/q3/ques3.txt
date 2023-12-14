@@ -1,0 +1,15 @@
+        Preamble: Agent X is worried that his spoofed IP will be removed from the whitelist before he can complete his task, he therefore wants to bring the server (machine B) down till the time he finishes his job. 
+
+(TCP syn flood attack is best. However DOS is hard to showcase in our lab settings. So, we will do some simulation of it via TCP connection flood. In real-world, TCP connection flood  has to be done at some very high rate, but here we will not use rate but a simple count, without worrying about time. Once you reach a certain count of TCP connections, assume the server cannot support any more connections and hence cannot share the whitelist. where you keep establishing TCP connections one after the other, the moment you hit some limit, but this is bit harder to achieve in our lab setting. So, we will try a TCP connection flood instead)
+
+  	--------------------- TCP Connect Flood --------------------------------
+Write a python script  to establish many connections with the server. Once you cross a certain threshold of connections, the server will crash, which is mimicked by the server revealing a flag on the webpage instead of the whitelist. 
+
+The username:password of the web-application is admin:S3curePassw0rd
+
+Submit the flag found in /home/labdirectory/flag.txt.
+
+Guidance:
+- The maximum connection limit is set to be random between [5,10]. Since the maximum limit cap is small enough, one can manually connect to the service via netcat parallelly. But we encourage you to create a python script which simultaneously creates connections for you.
+        - Checkout this forum post for guidance for creating the script: https://stackoverflow.com/questions/10810249/python-socket-multiple-clients
+      

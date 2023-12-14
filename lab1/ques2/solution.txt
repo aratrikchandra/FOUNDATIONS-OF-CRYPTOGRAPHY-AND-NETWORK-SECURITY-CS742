@@ -1,0 +1,6 @@
+In the OFB (Output Feedback) mode of operation, the same IV (Initialization Vector) is used for every encryption. This can lead to a security vulnerability if a plaintext and its corresponding ciphertext are known.
+
+Here’s how an attacker could derive the plaintext P2:
+
+First, the attacker would XOR the known plaintext P1 with its corresponding ciphertext C1 to obtain the keystream used in the encryption.
+Then, the attacker would XOR this keystream with the unknown ciphertext C2 to obtain the unknown plaintext P2.

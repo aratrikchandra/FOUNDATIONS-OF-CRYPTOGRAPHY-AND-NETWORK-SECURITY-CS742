@@ -1,0 +1,35 @@
+        Preamble: Agent X needs to move on to the next stage of the operation. He got the whitelist, great! But he now needs to pretend to be one of the whitelisted machines to contact C. But where even is machine C? 
+
+  ----------------------- Part-1: Port Scanning using Nmap ---------------------------------
+
+- The whitelist reveals not just IP addresses but also the protocol to use. Use nmap to find out what all services are running. 
+- Your scan should run for all TCP ports and for UDP ports in the range [1500-2500].
+- Once you complete port scanning, you will find out that there is a TCP port in range [40000,60000] open for you which is essentially the port where you will connect to and answer some questions to get the flag.
+
+----------------------- Submission Details --------------------------------------------
+- There is an nmap-challenge waiting for you in range [40000, 60000] of TCP ports, find the port, connect to it, answer questions asked there and get a flag.
+           - To connect to the open port use netcat: `nc -nv localhost <port>`
+- Submit the flag in /home/labdirectory/flag.txt.
+
+
+Guidance:
+- https://securitytrails.com/blog/nmap-commands
+- https://www.sans.org/blog/sans-pen-test-cheat-sheet-nmap-v1-1/
+
+
+--------------------- Part2- Spoofing ----------------------------
+One of the IP addresses in the white list is associated with a UDP port. What this means is this IP should connect to some UDP service. Nmap thankfully has revealed only 1 UDP port.
+
+So your job now is to spoof a UDP packet with the src IP as the one listed in the whitelist on the web-application and send it to the port you discovered and see what reply you get. Note you also need to sniff the traffic in parallel to snooping to find the reply from the server. The reply will contain the flag.
+
+Submit the flag found in /home/labdirectory/flag.txt.
+
+Guidance:
+- **NOTE:** For spoofing (in spoof.py) use only the ethernet/wifi ip, typically the one with interface eth0, ensXX, wlan0, or equivalent. Do not use localhost or 127.0.0.1 since with scapy it won't work 
+- The sample scapy script spoof.py is available in /home/labDirectory/spoof.py which generates a spoofed ICMP packet. Run it, along with a sniffer (also available in /home/labDirectory/sniff.py) to check if you can see the packet.
+     - To test them, open 2 terminal windows.
+     - Run the sniff.py script in one of the terminals to start sniffing the ICMP packets. [MAKE THE CHANGES ACCORDINGLY IN THE SCRIPT]
+     - On another terminal start the spoof.py script to spoof ICMP requests.  [MAKE THE CHANGES ACCORDINGLY IN THE SCRIPT]
+     - Now go to the terminal where you started sniff.py, and you will see ICMP requests coming in.
+- Now extend the script to perform the intended action.
+      

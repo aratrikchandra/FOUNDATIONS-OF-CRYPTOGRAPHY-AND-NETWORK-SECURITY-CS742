@@ -1,0 +1,24 @@
+        Activity 3:
+
+Preamble: We never got to know the name of the boss of Agent X till now, let's remedy it; his name is Albert Pinto. Given how many heads rolled and how many were hanged, drawn and quartered, you should know by now that Albert is very short tempered, with little patience for errors (his employees often comment behind his back “Albert Pinto Ko Gussa Kyoon Aata Hai”). Now Albert oversees many departments and has many people working under him in a hierarchy. Now at the bottom are the field-agents (leaves in the tree) who report to different managers, but sometimes also have to share information with each other. But since these agents don't know each other directly, they are not too comfortable trusting/dealing with others (which is understandably given the business they are in, where small mistakes can lead to rolling heads). How can these agents prove to each other that they are trustworthy and they are all indeed working for the same cause under the leadership of Albert? Mr. Albert wants to know (much like our news anchor Mr. Arnab Goswami)?
+
+Well, this is Agent X's and hence your headache now. Get cracking with a solution!
+
+PKI is the way forward. So, the idea is all these agents will get a digital certificate signed by Albert (after due background checks) and then when Agent X wants some info from Agent Y, the following steps are followed:
+1. All agents know only the public key of Albert (another advantage as opposed to maintaning
+public keys of so many agents)
+2. Agent X shares his certificate with Agent Y. This certificate includes the public key of Agent
+X, which is signed by Albert
+3. Agent Y verifies this certificate with the public key of Albert.
+4. If verified, Agent Y will use Agent X's public key and send the confidential information.
+(If Agent X wants to send info to Agent Y, procedure is similar except he will ask for Agent Y's certificate first; verify it and then send info confidentially).
+
+
+This involves setting up the following:
+Albert (Boss): Become a Certificate Authority via self signed certificate
+Agent: 
+ - Create public/private key pair
+ - Generate a “CSR” request to get a certificate
+Albert: Sign Agent's certificate
+
+

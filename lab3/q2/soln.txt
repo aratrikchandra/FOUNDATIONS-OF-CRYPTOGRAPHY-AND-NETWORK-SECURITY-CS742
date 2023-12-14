@@ -1,0 +1,99 @@
+Ques 2
+scan all 65535 TCP ports 
+nmap -p- <target-ip>
+
+80,631,2004,55774
+
+UDP ports in the range [1500-2500]:
+nmap -sU -p1500-2500 <target-ip>
+
+2005
+the port where you will connect to and answer some questions:
+
+nc -nv 127.0.0.1 55774
+
+Connection to 127.0.0.1 55774 port [tcp/*] succeeded!
+How many TCP ports are open based on nmap scan? Only include ports that are in these ranges [0-100], [1500-2500], [50000,60000]
+3
+Find the open TCP port between 1500-2500. What is the port number?
+2004
+Find the open UDP port between 1500-2500. What is the port number?
+2005
+Congratulations, you have passed nmap challenge!
+Here is you flag...
+FLAG{8OGMtJ1nBhYO8mrhkODt1I4Y1O7G8pk5}
+
+Part2
+
+sniff.py
+
+#!/usr/bin/python3
+
+from scapy.all import *
+
+# Put the interface of loopback interface.
+# use ifconfig command and find interface which has "inet 127.0.0.1"
+interfaces = ['ens33']
+
+pkt = sniff(iface=interfaces, filter='udp', count=10, prn=lambda x: x.show())
+
+spoof.py
+
+#!/usr/bin/python3
+
+from scapy.all import *
+
+# Create IP Packet
+ippacket = IP()
+# Put IP address to spoof here
+ippacket.src = '192.168.14.12'
+
+# Your ethernet IP address, typically the one with interface eth0, ensXX, wlan0, or equivalent.
+# Do no use localhost or 127.0.0.1 since with scapy it won't work 
+ippacket.dst = '192.168.220.128'
+
+# Create UDP Packet
+udppacket = UDP()
+
+udppacket.dport=2005;
+
+#Create Final packet
+packetToSend = ippacket/udppacket
+
+# Send the packet
+send(packetToSend)
+
+run spoof.py and sniff.py from two diff terminals
+
+     src       = 192.168.220.128
+     dst       = 192.168.14.12
+     \options   \
+###[ UDP ]### 
+        sport     = 2005
+        dport     = domain
+        len       = 80
+        chksum    = 0x6c3f
+###[ DNS ]### 
+           id        = 18533
+           qr        = 0
+           opcode    = 13
+           aa        = 1
+           tc        = 0
+           rd        = 0
+           ra        = 0
+           z         = 1
+           ad        = 1
+           cd        = 0
+           rcode     = 12
+           qdcount   = 28448
+           ancount   = 21828
+           nscount   = 20512
+           arcount   = 17260
+           qd        = ''
+           an        = ''
+           ns        = ''
+           ar        = ''
+###[ Raw ]### 
+              load      = "ient\nHere's the flag: FLAG{e9kzARR1xAtmw4UtKlwfzcA9YWMRpcL0}"
+
+
